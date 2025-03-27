@@ -8,10 +8,10 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 - Apresentação e Pitch do tema.
 - Visão geral da solução.
 
-### Entraga 2
+### Entrega 2
 
 - Protótipo no Figma
-- 
+- Versão 1 do projeto
 
 
 # Integrantes
