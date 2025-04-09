@@ -10,7 +10,11 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 
 ### Entrega 2
 
-- Versão 1 do projeto
+- Versão 1 - Esqueleto do projeto.
+
+### Entrega 3
+
+- Versão 2 - Adicao do Gráfico teia e Design de interface.
 
 
 # Integrantes
