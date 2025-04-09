@@ -10,7 +10,6 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 
 ### Entrega 2
 
-- Protótipo no Figma
 - Versão 1 do projeto
 
 
