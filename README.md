@@ -14,7 +14,15 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 
 ### Entrega 3
 
-- Versão 2 - Adicao do Gráfico teia e Design de interface.
+- Versão 2 - Adicao do Gráfico teia + Design de interface.
+
+_______________
+
+## Requisitos TO DO:
+- Pesos nas Respostas
+- Gerar Gráfico teia, com os pesos
+- Finalizar Versão 3
+- Implementar exportar o relatório
 
 
 # Integrantes
