@@ -23,6 +23,7 @@ _______________
 - Gerar Gráfico teia, com os pesos
 - Finalizar Versão 3
 - Implementar exportar o relatório
+- Extra: alterar o Design
 
 
 # Integrantes
