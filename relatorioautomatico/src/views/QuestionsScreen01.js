@@ -1,9 +1,14 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import Question from '../components/Question';
 
 export default props => (
   <View>
+    <Question 
+      question="Does your company determine relevant environmental measures to better manage its environmental impact?"
+      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+    />
+
     <Question 
       question="Does your company evaluate measures that would improve its contribution to society?"
       responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
@@ -17,6 +22,11 @@ export default props => (
     <Question 
       question="Does your company rate the relevance of these ESG options (from low importance to high importance)
       and prioritise appropriate action?"
+      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+    />
+
+    <Question 
+      question="Does your company use surveys / questionnaires to conduct assessments in these areas?"
       responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
     />
   </View>

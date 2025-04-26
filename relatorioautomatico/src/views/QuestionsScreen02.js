@@ -19,5 +19,15 @@ export default props => (
       question="Does your company use social media to communicate with stakeholders?"
       responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
     />
+
+    <Question 
+      question="Does your company have a strategy (at least for one year forward) to communicate with stakeholders?"
+      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+    />
+
+    <Question 
+      question="Does your company receive feedback from stakeholders?"
+      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+    />
   </View>
 )
