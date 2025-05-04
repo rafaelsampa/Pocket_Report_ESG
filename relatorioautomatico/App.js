@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import Stack from './src/navigation/Stack'
+import AuthStack from './src/navigation/AuthStack'
 
 
 export default props => (
   <SafeAreaView style={{flex: 1}}> 
     <NavigationContainer>
-      <Stack />
+      <AuthStack />
     </NavigationContainer>
   </SafeAreaView>
 )
