@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../auth/LoginScreen';
-import SignupScreen from '../auth/SignupScreen';
+import LoginScreen from '../auth/views/LoginScreen';
+import SignupScreen from '../auth/views/SignupScreen';
 
 const Stack = createStackNavigator()
 
@@ -8,7 +8,7 @@ export default function MainLayout(){
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Login"
+                name="LoginScreen"
                 options={{
                     headerShown: false,
                 }}>

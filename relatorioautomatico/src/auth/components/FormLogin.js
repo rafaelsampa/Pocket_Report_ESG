@@ -1,36 +1,77 @@
-import React from 'react';
-import {Text, View, StyleSheet, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Link from './Link';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../context/AuthContext';
+import Link from '../../components/Link';
 import colors from '../../constants/colors';
+import { supabase } from '../../lib/supabase';
 
-export default props => (
-  <View style={styles.form}>
-    <View>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-            placeholder='Enter your Email'
-            style={styles.input}
-        />
-    </View>
+export default props => {
+    const navigation = useNavigation();
 
-    <View>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-            placeholder='Password'
-            style={styles.input}
-            secureTextEntry
-        />
-    </View>
-
-    <Pressable style={styles.button}>
-        <Text style={styles.buttonText}>Enter</Text>
-    </Pressable>
-
-    <Link to="SignupScreen">Don't have an account? Sign up</Link>
+    const {setUser} = useAuth();
     
-  </View>
-)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    async function handleSingIn(){
+        setLoading(true);
+
+        const {data, error} = await supabase.auth.signInWithPassword({
+            email,
+            password
+        })
+
+        if(error){
+            Alert.alert('Error', error.message);
+            setLoading(false);
+            return;
+        }
+
+        setLoading(false);
+        setUser(data.user);
+    }
+
+    return (
+        <View style={styles.form}>
+            <View>
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                    placeholder='Enter your Email'
+                    style={styles.input}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    value={email}
+                    onChangeText={setEmail}
+                />
+            </View>
+
+            <View>
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                    placeholder='Password'
+                    style={styles.input}
+                    secureTextEntry
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    value={password}
+                    onChangeText={setPassword}
+                />
+            </View>
+
+            <Pressable style={styles.button} onPress={handleSingIn}>
+                <Text style={styles.buttonText}>
+                {loading ? 'Loading...' : 'Sign In'}
+                </Text>
+            </Pressable>
+
+            <Link to="SignupScreen">Don't have an account? Sign up</Link>
+
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     form: {
@@ -50,7 +91,7 @@ const styles = StyleSheet.create({
 
     input: {
         borderWidth: 1,
-        borderColor: colors.navyBlue,
+        borderColor: colors.turquoise,
         borderRadius: 8,
         marginBottom: 16,
         paddingHorizontal: 8,

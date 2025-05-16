@@ -1,33 +1,49 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import Link from './Link';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../../constants/colors';
+import {supabase} from '../../lib/supabase'
 
 export default props => {
+    const navigation = useNavigation();
 
-    const [name, setName] = useState('');
+    const [CompanyName, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    function handleSignup() {
-        console.log({
-            name,
-            email,
-            password
+    async function handleSignup() {
+        setLoading(true);
+
+        const {data, error} = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    CompanyName: CompanyName
+                }
+            }
         })
+
+        if(error){
+            Alert.alert('Error', error.message);
+            setLoading(false);
+            return;
+        }
+
+        setLoading(false);
     }
 
     return (
         <View style={styles.form}>
             <ScrollView style={{flex: 1}}>
                 <View>
-                    <Text style={styles.label}>Full name</Text>
+                    <Text style={styles.label}>Company name</Text>
                     <TextInput
-                        placeholder='Enter your name'
+                        placeholder='Enter your Company name'
                         style={styles.input}
-                        value={name}
+                        value={CompanyName}
                         onChangeText={setName}
                     />
                 </View>
@@ -37,6 +53,8 @@ export default props => {
                     <TextInput
                         placeholder='Enter your Email'
                         style={styles.input}
+                        autoCapitalize='none'
+                        autoCorrect={false}
                         value={email}
                         onChangeText={setEmail}
                     />
@@ -48,13 +66,17 @@ export default props => {
                         placeholder='Password'
                         style={styles.input}
                         secureTextEntry
+                        autoCapitalize='none'
+                        autoCorrect={false}
                         value={password}
                         onChangeText={setPassword}
                     />
                 </View>
 
                 <Pressable style={styles.button} onPress={handleSignup}>
-                    <Text style={styles.buttonText}>Sign up</Text>
+                    <Text style={styles.buttonText}>
+                        {loading ? 'Loading...' : 'Sign Up'}
+                    </Text>
                 </Pressable>
             </ScrollView>
         </View>
@@ -79,7 +101,7 @@ const styles = StyleSheet.create({
 
     input: {
         borderWidth: 1,
-        borderColor: colors.navyBlue,
+        borderColor: colors.turquoise,
         borderRadius: 8,
         marginBottom: 16,
         paddingHorizontal: 8,

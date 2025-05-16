@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
-import FormLogin from './components/FormLogin';
-import Header from './components/Header';
-import colors from '../constants/colors';
+import FormLogin from '../components/FormLogin';
+import Header from '../components/Header';
+import colors from '../../constants/colors';
 
 export default props => (
     <View style={styles.container}>

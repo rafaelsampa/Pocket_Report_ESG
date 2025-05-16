@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
-import colors from '../../constants/colors';
+import colors from '../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 
 export default props => {
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
         marginTop: 16,
         color: colors.black,
         fontWeight: 'bold',
-        color: colors.navyBlue,
+        color: colors.turquoise,
     },
 })

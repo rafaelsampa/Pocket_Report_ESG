@@ -1,8 +1,8 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import FormSignup from './components/FormSignup';
-import Header from './components/Header';
+import FormSignup from '../components/FormSignup';
+import Header from '../components/Header';
 import { Ionicons } from '@expo/vector-icons';
-import colors from '../constants/colors';
+import colors from '../../constants/colors';
 
 export default props => (
     <View style={styles.container}>
