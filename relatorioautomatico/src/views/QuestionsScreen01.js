@@ -1,33 +1,45 @@
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import { ScrollView } from 'react-native';
 import Question from '../components/Question';
 
-export default props => (
-  <View>
-    <Question 
-      question="Does your company determine relevant environmental measures to better manage its environmental impact?"
-      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
-    />
-
-    <Question 
-      question="Does your company evaluate measures that would improve its contribution to society?"
-      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
-    />
-
-    <Question 
-      question="Does your company identify best practice corporate governance issues to maintain regulatory compliance?"
-      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
-    />
-
-    <Question 
-      question="Does your company rate the relevance of these ESG options (from low importance to high importance)
-      and prioritise appropriate action?"
-      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
-    />
-
-    <Question 
-      question="Does your company use surveys / questionnaires to conduct assessments in these areas?"
-      responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
-    />
-  </View>
-)
+export default function QuestionsScreen01({ onAnswer, answers }) {
+  return (
+    <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <Question
+        question="Does your company have a code of conduct for employees?"
+        responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+        category="Social"
+        onAnswer={onAnswer}
+        index={0}
+      />
+      <Question
+        question="Does your company provide training on social responsibility?"
+        responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+        category="Social"
+        onAnswer={onAnswer}
+        index={1}
+      />
+      <Question
+        question="Does your company have policies to promote diversity and inclusion?"
+        responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+        category="Social"
+        onAnswer={onAnswer}
+        index={2}
+      />
+      <Question
+        question="Does your company support local community initiatives?"
+        responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+        category="Social"
+        onAnswer={onAnswer}
+        index={3}
+      />
+      <Question
+        question="Does your company have a policy to prevent discrimination?"
+        responses={["Never", "Rarely", "Sometimes", "Often", "Always"]}
+        category="Social"
+        onAnswer={onAnswer}
+        index={4}
+      />
+    </ScrollView>
+  );
+}

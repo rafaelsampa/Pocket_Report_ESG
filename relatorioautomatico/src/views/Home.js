@@ -34,12 +34,12 @@ export default props => {
         </View>
 
         <View style={styles.report}>
-          <View style={styles.buttonWrapper}>
-            <Pressable onPress={() => navigation.navigate(props.next)}>
-              <Text style={styles.buttonText}>Start Report</Text>
-            </Pressable>
-          </View>
+        <View style={styles.buttonWrapper}>
+          <Pressable onPress={() => navigation.navigate('QuestionsScreen01')}>
+            <Text style={styles.buttonText}>Start Report</Text>
+          </Pressable>
         </View>
+      </View>
       </View>
     </SafeAreaView>
   )
