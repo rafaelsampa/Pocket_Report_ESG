@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import RadarChartSVG from '../components/RadarChartSVG';
 
 const getScoreText = (score) => {
   if (score <= 1.67) return {
@@ -20,14 +21,12 @@ const getScoreText = (score) => {
 };
 
 export default function Submit({ answers }) {
+  // Calcula o score conforme a fórmula definida
   const calculateScore = (category) => {
-    const valores = answers[category].valores;
-    // Soma dos valores das respostas selecionadas
+    const valores = answers[category]?.valores || [];
     const somaSelecionadas = valores.reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0);
-    // Soma dos valores máximos possíveis (cada pergunta tem um maxWeight, normalmente igual ao maior peso possível)
-    const maxWeight = Math.max(...valores.filter(v => typeof v === 'number'));
+    const maxWeight = Math.max(...valores.filter(v => typeof v === 'number'), 1);
     const somaMaximos = valores.filter(v => typeof v === 'number').length * maxWeight;
-    // Fórmula normalizada
     return somaMaximos > 0 ? (somaSelecionadas / somaMaximos) * 5 : 0;
   };
 
@@ -37,86 +36,90 @@ export default function Submit({ answers }) {
     Governança: calculateScore('Governança')
   };
 
-  const handleExport = () => {
-    Alert.alert(
-      'Report Summary',
-      `Total Scores:\n
-      Social: ${scores.Social.toFixed(1)}/5\n
-      Ambiental: ${scores.Ambiental.toFixed(1)}/5\n
-      Governança: ${scores.Governança.toFixed(1)}/5`
-    );
-  };
-
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>ESG Report</Text>
 
+      {/* Gráfico teia SVG */}
+      <RadarChartSVG scores={scores} />
+
+      {/* Cards de score e textos */}
       {Object.entries(scores).map(([category, score]) => {
         const evaluation = getScoreText(score);
         return (
-          <View key={category} style={styles.categoryContainer}>
-            <Text style={styles.categoryTitle}>{category}</Text>
-            <Text style={styles.scoreText}>Score: {score.toFixed(1)}/5</Text>
+          <View key={category} style={styles.card}>
+            <Text style={styles.cardTitle}>{category}</Text>
+            <Text style={styles.scoreText}>Score: {score.toFixed(2)} / 5</Text>
             <Text style={styles.levelText}>Level: {evaluation.level}</Text>
-            <View style={styles.evaluationContainer}>
-              <Text style={styles.subtitle}>Strengths:</Text>
-              <Text>{evaluation.strengths}</Text>
-              <Text style={styles.subtitle}>Areas to Improve:</Text>
-              <Text>{evaluation.improvements}</Text>
-            </View>
+            <Text style={styles.strengthsTitle}>Strengths:</Text>
+            <Text style={styles.strengths}>{evaluation.strengths}</Text>
+            <Text style={styles.improvementsTitle}>Areas to Improve:</Text>
+            <Text style={styles.improvements}>{evaluation.improvements}</Text>
           </View>
         );
       })}
 
-      <TouchableOpacity style={styles.button} onPress={handleExport}>
-        <Text style={styles.buttonText}>View Summary</Text>
-      </TouchableOpacity>
+      {/* Botão de exportação ou outras ações, se houver */}
+      {/* <TouchableOpacity style={styles.button} onPress={...}>
+        <Text style={styles.buttonText}>Export Report</Text>
+      </TouchableOpacity> */}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: '#fff'
+    alignItems: 'center',
+    padding: 24,
+    backgroundColor: '#fff',
+    flexGrow: 1
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center'
+    marginBottom: 16
   },
-  categoryContainer: {
-    marginBottom: 20,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    backgroundColor: '#f8f8f8'
+  card: {
+    width: '100%',
+    backgroundColor: '#f8f8f8',
+    borderRadius: 10,
+    padding: 18,
+    marginVertical: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2
   },
-  categoryTitle: {
+  cardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333'
+    marginBottom: 6,
+    color: '#2196F3'
   },
   scoreText: {
     fontSize: 18,
-    marginBottom: 5
+    marginBottom: 4
   },
   levelText: {
     fontSize: 16,
-    marginBottom: 10,
+    fontWeight: 'bold',
+    marginBottom: 8,
     color: '#666'
   },
-  evaluationContainer: {
-    marginTop: 10
+  strengthsTitle: {
+    fontWeight: 'bold',
+    marginTop: 8
   },
-  subtitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginTop: 8,
-    marginBottom: 4
+  strengths: {
+    marginBottom: 6
+  },
+  improvementsTitle: {
+    fontWeight: 'bold',
+    marginTop: 8
+  },
+  improvements: {
+    marginBottom: 6
   },
   button: {
     backgroundColor: '#2196F3',
