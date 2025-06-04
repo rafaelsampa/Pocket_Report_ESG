@@ -119,7 +119,7 @@ export default function Submit({ answers, navigation, route }) {
         );
       })}
       <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>Salvar esse relatório</Text>
+        <Text style={styles.buttonText}>Save this report</Text>
       </TouchableOpacity>
     </ScrollView>
   );
