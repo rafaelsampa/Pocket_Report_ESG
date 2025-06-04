@@ -9,8 +9,7 @@ import { supabase } from '../../lib/supabase';
 
 export default props => {
     const navigation = useNavigation();
-
-    const {setUser} = useAuth();
+    const { refreshUser } = useAuth();
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,6 +17,14 @@ export default props => {
 
     async function handleSingIn(){
         setLoading(true);
+
+        // Validação simples de e-mail antes de tentar login
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            Alert.alert('Erro', 'Por favor, insira um e-mail válido.');
+            setLoading(false);
+            return;
+        }
 
         const {data, error} = await supabase.auth.signInWithPassword({
             email,
@@ -31,7 +38,8 @@ export default props => {
         }
 
         setLoading(false);
-        setUser(data.user);
+        await refreshUser(); // força atualização do contexto
+        // Navegação automática será feita pelo fluxo do contexto (App.js)
     }
 
     return (

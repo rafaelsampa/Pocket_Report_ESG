@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { supabase } from '../services/supabaseClient';
+import { useAuth } from '../auth/context/AuthContext';
+import RadarChartSVG from './RadarChartSVG';
 
 const getScoreText = (score) => {
   if (score <= 1.67) return {
@@ -19,7 +22,40 @@ const getScoreText = (score) => {
   };
 };
 
-export default function Submit({ answers }) {
+export default function Submit({ answers, navigation, route }) {
+  const { user } = useAuth();
+  const [companyName, setCompanyName] = useState('');
+
+  // Buscar nome da empresa na tabela users pelo id do usuário
+  useEffect(() => {
+    async function fetchCompanyName() {
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('users')
+        .select('CompanyName')
+        .eq('id', user.id)
+        .single();
+      if (data && data.CompanyName) {
+        setCompanyName(data.CompanyName);
+      } else {
+        setCompanyName(user.email || 'Empresa');
+      }
+    }
+    fetchCompanyName();
+  }, [user]);
+
+  // Se não houver usuário, não permita salvar
+  if (!user) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Usuário não autenticado</Text>
+      </View>
+    );
+  }
+
+  const year = new Date().getFullYear();
+  const title = `${year} Report – ${companyName}`;
+
   const calculateScore = (category) => {
     const valores = answers[category].valores;
     // Soma dos valores das respostas selecionadas
@@ -37,20 +73,35 @@ export default function Submit({ answers }) {
     Governança: calculateScore('Governança')
   };
 
-  const handleExport = () => {
-    Alert.alert(
-      'Report Summary',
-      `Total Scores:\n
-      Social: ${scores.Social.toFixed(1)}/5\n
-      Ambiental: ${scores.Ambiental.toFixed(1)}/5\n
-      Governança: ${scores.Governança.toFixed(1)}/5`
-    );
+  const handleSave = async () => {
+    if (!user) {
+      Alert.alert('Usuário não autenticado');
+      return;
+    }
+    console.log('Tentando salvar relatório. user.id:', user.id);
+
+    const { error } = await supabase
+      .from('report')
+      .insert([{
+        score_social: scores.Social,
+        score_ambiental: scores.Ambiental,
+        score_governanca: scores.Governança,
+        title,
+        id_fk_auth: user.id // <-- ENVIE EXPLICITAMENTE!
+      }]);
+    if (error) {
+      console.log('Erro completo:', error);
+      Alert.alert('Erro ao salvar relatório', error.message);
+    } else {
+      Alert.alert('Relatório salvo com sucesso!');
+      navigation.navigate('Home');
+    }
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>ESG Report</Text>
-
+      <Text style={styles.title}>{companyName}</Text>
+      <RadarChartSVG scores={scores} size={300} />
       {Object.entries(scores).map(([category, score]) => {
         const evaluation = getScoreText(score);
         return (
@@ -67,9 +118,8 @@ export default function Submit({ answers }) {
           </View>
         );
       })}
-
-      <TouchableOpacity style={styles.button} onPress={handleExport}>
-        <Text style={styles.buttonText}>View Summary</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.buttonText}>Salvar esse relatório</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -81,24 +131,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#397992',
+    letterSpacing: 1,
   },
   categoryContainer: {
     marginBottom: 20,
-    padding: 15,
+    padding: 18,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    backgroundColor: '#f8f8f8'
+    borderColor: '#e0e0e0',
+    borderRadius: 14,
+    backgroundColor: '#f8f8f8',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 4,
+    elevation: 2,
   },
   categoryTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333'
+    color: '#397992'
   },
   scoreText: {
     fontSize: 18,
@@ -119,15 +176,21 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   button: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#397992',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: 'center',
-    marginVertical: 20
+    marginVertical: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.13,
+    shadowRadius: 4,
+    elevation: 2,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold'
+    fontSize: 17,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
   }
 });

@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, Pressable, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { Text, View, Pressable, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +9,28 @@ import { supabase } from "../lib/supabase";
 
 export default props => {
     const navigation = useNavigation();
+    const { user } = useAuth();
+    const [companyName, setCompanyName] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchCompanyName() {
+            if (!user) return;
+            setLoading(true);
+            const { data, error } = await supabase
+                .from('users')
+                .select('CompanyName')
+                .eq('id', user.id)
+                .single();
+            if (data && data.CompanyName) {
+                setCompanyName(data.CompanyName);
+            } else {
+                setCompanyName(user.email || 'Empresa');
+            }
+            setLoading(false);
+        }
+        fetchCompanyName();
+    }, [user]);
 
     async function handleLogOut() {
         const {error} = await supabase.auth.signOut();
@@ -44,6 +66,20 @@ export default props => {
                             color='#FFFFFF'
                         />
                     </Pressable>
+                </View>
+
+                {/* Perfil do usuário logado */}
+                <View style={styles.profileContainer}>
+                    {loading ? (
+                        <ActivityIndicator size="small" color={colors.turquoise} />
+                    ) : (
+                        <>
+                            <Text style={styles.profileLabel}>Empresa:</Text>
+                            <Text style={styles.profileValue}>{companyName}</Text>
+                            <Text style={styles.profileLabel}>Email:</Text>
+                            <Text style={styles.profileValue}>{user?.email}</Text>
+                        </>
+                    )}
                 </View>
 
                 <View style={styles.logoutContainer}>
@@ -91,6 +127,31 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    profileContainer: {
+        marginTop: 40,
+        marginHorizontal: 30,
+        marginBottom: 20,
+        padding: 20,
+        borderRadius: 14,
+        backgroundColor: '#f8f8f8',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.07,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    profileLabel: {
+        fontSize: 16,
+        color: colors.turquoise,
+        fontWeight: 'bold',
+        marginTop: 8,
+    },
+    profileValue: {
+        fontSize: 18,
+        color: '#333',
+        marginBottom: 8,
+    },
     logoutContainer: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -104,9 +165,8 @@ const styles = StyleSheet.create({
     },
     logoutText: {
         color: 'red',
-        fontSize: 16,
-        marginLeft: 8,
         fontSize: 22,
+        marginLeft: 8,
         fontWeight: 'bold'
     }
 })

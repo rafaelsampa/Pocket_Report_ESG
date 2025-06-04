@@ -11,6 +11,7 @@ import QuestionsScreen05 from '../views/QuestionsScreen05';
 import Submit from '../views/Submit';
 import Settings from '../views/Settings';
 import NextBack from '../components/NextBack';
+import ReportView from '../views/ReportView';
 
 const Stack = createStackNavigator();
 
@@ -125,6 +126,7 @@ export default function AppStack() {
       </Stack.Screen>
 
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="ReportView" component={ReportView} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
