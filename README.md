@@ -16,6 +16,18 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 
 - Versão 2 - Adicao do Gráfico teia + Design de interface.
 
+### Entrega Final
+
+- Versão 3 - Reports Salvos repectifivamente no perfil logado.
+
+<p align="center">
+  <img src="./Entrega-Final/tela_login.jpg" alt="Imagem 1" width="200" height="450">
+  <img src="./Entrega-Final/tela2.jpg" alt="Imagem 3" width="200" height="450">
+  <img src="./Entrega-Final/tela1.jpg" alt="Imagem 2" width="200" height="450">
+  
+</p>
+
+
 _______________
 
 ## Requisitos TO DO:
@@ -26,18 +38,29 @@ _______________
 - Validação
 
 ### Implementações
-- Pesos nas Respostas
-- Gerar Gráfico teia, com os pesos (Pesquisar)
-- "Deploy" da Versão 3
-- Exportar o relatório
+- Pesos nas Respostas - OK
+- Gerar Gráfico teia, com os pesos (Pesquisar) - OK
+- "Deploy" da Versão 3 - OK
+- Visualização de Relatórios por login - OK
+- Exportar o relatório(pdf, envio via email) - X
 
+
+# Baixe aqui
+
+Link: https://expo.dev/accounts/rafaelsampa/projects/snack-387ee25a-de82-4601-8c77-cf458caae4df/builds/dcad40ee-edd0-4fff-a28e-ea22b9d9a484
+
+
+<p align="center">
+  <img src="./Entrega-Final/qrcode.png" alt="Imagem 1" width="400" height="400">
+</p>
 
 
 # Integrantes
 - Arthur Felipe Leite de Vasconcelos
 - Gabriel Martins de Souza
-- Miguel Reis Henroz
 - Rafael Sampaio e Silva
+- Miguel Reis Henroz
+
 
 
 
