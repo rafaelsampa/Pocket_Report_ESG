@@ -31,13 +31,13 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 _______________
 
 ## Requisitos:
-- Login - Autenticação da Empresa
+- Login - Autenticação da Empresa - OK
 - Perguntas dentro do template - OK
 - Pesos nas Respostas - OK
 - Gerar Gráfico teia, com os pesos - OK
 - Salvar relatório referente ao seu ano - OK
 - Visualização de Relatórios por login - OK
-- Exportar o relatório(pdf, envio via email) - X
+- Exportar o relatório(pdf, envio via email) - X (RESSALVA DO CLIENTE)
 
 
 # Baixe aqui
