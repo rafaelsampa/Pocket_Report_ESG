@@ -30,17 +30,12 @@ No contexto do padrão da ESG, "Environmental, Social and Governance" (Ambiental
 
 _______________
 
-## Requisitos TO DO:
-
-### Design
-- Padronizar o app
-- Colocar cores do site: https://mess4ge-project.eu/the-project/
-- Validação
-
-### Implementações
+## Requisitos:
+- Login - Autenticação da Empresa
+- Perguntas dentro do template - OK
 - Pesos nas Respostas - OK
-- Gerar Gráfico teia, com os pesos (Pesquisar) - OK
-- "Deploy" da Versão 3 - OK
+- Gerar Gráfico teia, com os pesos - OK
+- Salvar relatório referente ao seu ano - OK
 - Visualização de Relatórios por login - OK
 - Exportar o relatório(pdf, envio via email) - X
 
