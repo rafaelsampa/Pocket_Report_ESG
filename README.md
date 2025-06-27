@@ -65,7 +65,6 @@ Link: https://expo.dev/accounts/rafaelsampa/projects/snack-387ee25a-de82-4601-8c
     <tr>
       <td align="center"><a href="https://github.com/ArthurFunicap"><img src="https://github.com/ArthurFunicap.png" width="auto" height="8.25%"/><br>Arthur felipe</a></td>
       <td align="center"><a href="https://github.com/gmartinsouza"><img src="https://github.com/gmartinsouza.png" width="auto" height="8.25%"/><br>Gabriel Martins</a></td>
-      <td align="center"><a href="https://github.com/MiguelHzUnicap"><img src="https://github.com/MiguelHzUnicap.png" width="auto" height="8.25%"/><br>Miguel</a></td>
       <td align="center"><a href="https://github.com/rafaelsampa"><img src="https://github.com/rafaelsampa.png" width="auto" height="8.25%"/><br>Rafael Sampaio</a></td>
     </tr>
   </tbody>
