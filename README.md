@@ -51,10 +51,10 @@ Link: https://expo.dev/accounts/rafaelsampa/projects/snack-387ee25a-de82-4601-8c
 
 
 # Integrantes
-- Rafael Sampaio e Silva
+
 - Arthur Felipe Leite de Vasconcelos
 - Gabriel Martins de Souza
-
+- Rafael Sampaio e Silva
 
 
 
